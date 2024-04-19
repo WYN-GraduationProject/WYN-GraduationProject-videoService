@@ -1,0 +1,7 @@
+fastapi>=0.110.1
+uvicorn>=0.29.0
+grpcio-tools>=1.62.1
+grpcio>=1.62.1
+nacos-sdk-python>=0.1.14
+numpy>=1.26.4
+opencv-python>=4.9.0.80
