@@ -8,7 +8,7 @@ from utils.tools.LoggingFormatter import LoggerManager
 from utils.tools.gRPCManager import GrpcManager
 
 router = APIRouter(
-    prefix="/api/face",
+    prefix="/api/video",
     tags=["face"],
     responses={404: {"description": "Not found"}},
 )
@@ -67,7 +67,7 @@ async def process_video(video_model: VideoModel, grpc_manager) -> str | None:
         return video_model.path + "/" + video_model.filename
 
 
-@router.post("/test")
+@router.post("/face")
 async def upload_video(video: UploadFile = File(...), grpc_manager: GrpcManager = Depends(get_grpc_manager)):
     # 传递视频文件路径给处理函数
     video_model = await VideoModel.http_video_save(video)

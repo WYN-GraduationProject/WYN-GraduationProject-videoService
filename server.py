@@ -7,6 +7,7 @@ from fastapi.middleware.cors import CORSMiddleware
 from contextlib import asynccontextmanager
 from utils.tools.LoggingFormatter import LoggerManager
 from utils.tools.NacosManager import NacosManager, NacosServerUtils
+from web.admin import admin_api
 from web.face import face_api
 from web.object_detection import object_detection_api
 
@@ -15,7 +16,7 @@ from web.object_detection import object_detection_api
 async def app_lifespan(app: FastAPI):
     global nacos_serverutils
     nacos_manager = NacosManager()
-    nacos_serverutils = nacos_manager.get_server_utils("video_service", "0.0.0.0", 8003)
+    nacos_serverutils = nacos_manager.get_server_utils("video-service", "0.0.0.0", 8003)
     await nacos_serverutils.register_service()
     asyncio.create_task(nacos_serverutils.beat(10))
     try:
@@ -27,16 +28,17 @@ async def app_lifespan(app: FastAPI):
 app = FastAPI(lifespan=app_lifespan)
 
 # 允许所有来源
-app.add_middleware(
-    CORSMiddleware,
-    allow_origins=["*"],  # 允许所有来源
-    allow_credentials=True,
-    allow_methods=["*"],  # 允许所有方法
-    allow_headers=["*"],  # 允许所有头
-)
+# app.add_middleware(
+#     CORSMiddleware,
+#     allow_origins=["*"],  # 允许所有来源
+#     allow_credentials=True,
+#     allow_methods=["*"],  # 允许所有方法
+#     allow_headers=["*"],  # 允许所有头
+# )
 
 app.include_router(face_api.router)
 app.include_router(object_detection_api.router)
+app.include_router(admin_api.router)
 
 logger = LoggerManager(logger_name="video_service").get_logger()
 nacos_logger = logging.getLogger('nacos.client')
