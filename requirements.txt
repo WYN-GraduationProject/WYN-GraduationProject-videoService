@@ -5,3 +5,4 @@ grpcio>=1.62.1
 nacos-sdk-python>=0.1.14
 numpy>=1.26.4
 opencv-python>=4.9.0.80
+SQLAlchemy>=2.0.29
