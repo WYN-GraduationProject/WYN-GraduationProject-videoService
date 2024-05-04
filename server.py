@@ -7,6 +7,7 @@ from fastapi.middleware.cors import CORSMiddleware
 from contextlib import asynccontextmanager
 from utils.tools.LoggingFormatter import LoggerManager
 from utils.tools.NacosManager import NacosManager, NacosServerUtils
+from web.admin import admin_api
 from web.face import face_api
 from web.object_detection import object_detection_api
 
@@ -37,6 +38,7 @@ app.add_middleware(
 
 app.include_router(face_api.router)
 app.include_router(object_detection_api.router)
+app.include_router(admin_api.router)
 
 logger = LoggerManager(logger_name="video_service").get_logger()
 nacos_logger = logging.getLogger('nacos.client')

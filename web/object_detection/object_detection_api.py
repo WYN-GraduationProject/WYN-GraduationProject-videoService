@@ -8,7 +8,7 @@ from utils.tools.LoggingFormatter import LoggerManager
 from utils.tools.gRPCManager import GrpcManager
 
 router = APIRouter(
-    prefix="/api/object_detection",
+    prefix="/api/video",
     tags=["object_detection"],
     responses={404: {"description": "Not found"}},
 )
@@ -104,14 +104,14 @@ async def process_video_withpre(video_model: VideoModel, grpc_manager) -> str | 
     return file_name
 
 
-@router.post("/test")
+@router.post("/object_detection")
 async def upload_video(video: UploadFile = File(...), grpc_manager: GrpcManager = Depends(get_grpc_manager)):
     video_model = await VideoModel.http_video_save(video)
     file_name = await process_video(video_model, grpc_manager)
     return FileResponse(file_name, media_type="video/mp4", filename="video.mp4")
 
 
-@router.post("/withpre")
+@router.post("/object_detection_withpre")
 async def upload_video_with_pre(video: UploadFile = File(...), grpc_manager: GrpcManager = Depends(get_grpc_manager)):
     video_model = await VideoModel.http_video_save(video)
     file_name = await process_video_withpre(video_model, grpc_manager)

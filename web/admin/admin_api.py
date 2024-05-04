@@ -13,6 +13,7 @@ router = APIRouter(
 def get_post_manager():
     return PostManager()
 
+
 @router.post("/posts/")
 def create_post(post: PostSchema, post_manager: PostManager = Depends(get_post_manager)):
     post = PostModel(**post.dict())
