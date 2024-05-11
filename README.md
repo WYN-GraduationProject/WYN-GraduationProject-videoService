@@ -27,3 +27,4 @@
 >- 通过 Nacos 实现服务注册与发现
 >- 通过 Docker 实现容器化部署
 >- 通过 GitHub actions 实现 CI/CD
+>- 通过Sqlalchemy 实现需求帖子的持久化存储 
